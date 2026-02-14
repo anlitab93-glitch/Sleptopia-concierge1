@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sleptopia — Menu & Concierge</title>
+  <meta name="theme-color" content="#0b0f14" />
+  <style>
+    :root{--bg:#0b0f14;--line:rgba(255,255,255,.08);--text:#e9eef6;--muted:#a9b4c3;--shadow:0 16px 42px rgba(0,0,0,.55);--max:980px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text);
+      background:radial-gradient(1100px 520px at 12% -10%, rgba(110,168,255,.18), transparent 60%),
+              radial-gradient(900px 520px at 86% 0%, rgba(143,211,255,.12), transparent 55%),
+              radial-gradient(900px 650px at 60% 110%, rgba(56,211,159,.10), transparent 55%),
+              var(--bg);}
+    .top{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg, rgba(11,15,20,.92), rgba(11,15,20,.55));
+      border-bottom:1px solid rgba(255,255,255,.06);}
+    .topin{max-width:var(--max);margin:0 auto;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{width:38px;height:38px;border-radius:12px;background:radial-gradient(circle at 30% 30%, rgba(143,211,255,.9), rgba(110,168,255,.45) 45%, rgba(19,29,42,0) 70%),
+      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.10);box-shadow:0 10px 26px rgba(0,0,0,.4);}
+    h1{margin:0;font-size:14px;letter-spacing:.18em;text-transform:uppercase}
+    .sub{margin-top:2px;font-size:12px;color:var(--muted)}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);font-size:13px;white-space:nowrap}
+    .dot{width:7px;height:7px;border-radius:99px;background:#38d39f;box-shadow:0 0 0 4px rgba(56,211,159,.14)}
+    .wrap{max-width:var(--max);margin:0 auto;padding:14px 14px 90px}
+    .hero{border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg, rgba(15,22,32,.92), rgba(15,22,32,.74));box-shadow:var(--shadow);padding:16px}
+    .hero h2{margin:0;font-size:20px;font-weight:700}
+    .hero p{margin:10px 0 0;color:var(--muted);font-size:13.5px;line-height:1.55}
+    .controls{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .search{flex:1;min-width:210px;display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03)}
+    .search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:14px}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .tab{padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);color:var(--muted);cursor:pointer;user-select:none;font-size:13px}
+    .tab.active{background:linear-gradient(180deg, rgba(143,211,255,.22), rgba(143,211,255,.08));color:var(--text);border-color:rgba(143,211,255,.30)}
+    .section{margin-top:16px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+    .section h3{margin:0;font-size:14px}
+    .section .hint{margin:0;color:var(--muted);font-size:12.5px}
+    .grid{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.grid{grid-template-columns:1fr}}
+    .card{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);border-radius:18px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.28);display:flex;flex-direction:column;min-height:330px;transition:transform .12s ease,border-color .12s ease}
+    .card:hover{transform:translateY(-2px);border-color:rgba(143,211,255,.22)}
+    .img{height:170px;position:relative}
+    .img img{width:100%;height:100%;object-fit:cover;display:block}
+    .chip{position:absolute;left:12px;top:12px;padding:7px 10px;border-radius:999px;background:rgba(11,15,20,.65);border:1px solid rgba(255,255,255,.12);font-size:12px;backdrop-filter:blur(10px)}
+    .body{padding:12px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .name{font-weight:750}
+    .cat{color:var(--muted);font-size:12px}
+    .price{font-weight:800;font-size:16px}
+    .price span{color:var(--muted);font-size:12px;font-weight:650}
+    .actions{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .btn{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--text);border-radius:14px;padding:11px 12px;font-weight:700;font-size:13px;cursor:pointer;text-align:center;user-select:none;transition:transform .1s ease,filter .1s ease;text-decoration:none}
+    .btn:active{transform:scale(.99)}
+    .btn.primary{background:linear-gradient(180deg, rgba(110,168,255,.24), rgba(110,168,255,.08));border-color:rgba(143,211,255,.30)}
+    .btn.ghost{color:var(--muted)}
+    .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:rgba(15,22,34,.92);border:1px solid rgba(255,255,255,.12);color:rgba(233,238,246,.95);
+      padding:10px 12px;border-radius:14px;box-shadow:0 12px 26px rgba(0,0,0,.45);z-index:200;font-size:13px;backdrop-filter:blur(10px);display:none;max-width:min(560px, calc(100vw - 28px));text-align:center}
+    .toast.show{display:block}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="topin">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>SLEPTOPIA</h1>
+          <div class="sub">Menu Makanan & Concierge Minimarket</div>
+        </div>
+      </div>
+      <div class="pill" title="Order via WhatsApp">
+        <span class="dot"></span>
+        <span><b>Order WA</b> <span style="color:var(--muted)">24/7</span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h2>Versi baru (anti error) ✅ — sudah ada gambar + Empe2 Lenjer + minimarket.</h2>
+      <p>Pilih item → <b>Copy order</b> → klik <b>WhatsApp</b> untuk kirim. (Link WA tipe <i>message</i> kadang nggak auto-isi teks, jadi copy itu wajib ya 😄)</p>
+
+      <div class="controls">
+        <div class="search">
+          <span style="color:var(--muted)">🔎</span>
+          <input id="q" placeholder="Cari: lemper, lenjer, rokok, beer, air..." autocomplete="off" />
+        </div>
+        <div class="tabs">
+          <div class="tab active" data-tab="all">Semua</div>
+          <div class="tab" data-tab="Makanan">Makanan</div>
+          <div class="tab" data-tab="Concierge">Concierge</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section">
+      <h3>Daftar Item</h3>
+      <p class="hint">Gambar sudah embed (nggak perlu internet untuk gambar).</p>
+    </div>
+
+    <section class="grid" id="grid">
+      <article class="card" data-cat="Makanan">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232b1c0c%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffb24a%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3ELemper%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Lemper" loading="lazy"/>
+    <div class="chip">Snack</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Lemper</div>
+      <div class="cat">Makanan</div>
+    </div>
+    <div class="price">Rp 5.000<span> / pcs</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Lemper', 5000, 'pcs'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Lemper', 5000, 'pcs'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Makanan">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230c2a16%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2352f08c%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3EEmpe2%20Telur%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Empe2 Telur" loading="lazy"/>
+    <div class="chip">Hot</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Empe2 Telur</div>
+      <div class="cat">Makanan</div>
+    </div>
+    <div class="price">Rp 35.000<span> / pcs</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Empe2 Telur', 35000, 'pcs'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Empe2 Telur', 35000, 'pcs'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Makanan">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23102040%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2333c2ff%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3EEmpe2%20Lenjer%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Empe2 Lenjer" loading="lazy"/>
+    <div class="chip">Classic</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Empe2 Lenjer</div>
+      <div class="cat">Makanan</div>
+    </div>
+    <div class="price">Rp 10.000<span> / pcs</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Empe2 Lenjer', 10000, 'pcs'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Empe2 Lenjer', 10000, 'pcs'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Concierge">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232a0c1a%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ff6aa2%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3ERokok%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Rokok" loading="lazy"/>
+    <div class="chip">Minimarket</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Rokok</div>
+      <div class="cat">Concierge</div>
+    </div>
+    <div class="price">Rp 80.000<span> / pack</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Rokok', 80000, 'pack'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Rokok', 80000, 'pack'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Concierge">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231b2330%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffd36b%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3EBeer%206%20Can%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Beer / 6 can" loading="lazy"/>
+    <div class="chip">Chilled</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Beer / 6 can</div>
+      <div class="cat">Concierge</div>
+    </div>
+    <div class="price">Rp 250.000<span> / pack</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Beer / 6 can', 250000, 'pack'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Beer / 6 can', 250000, 'pack'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Concierge">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b2a3a%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2333c2ff%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3EAir%20Mineral%201.5L%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Air Mineral 1.5L" loading="lazy"/>
+    <div class="chip">Essentials</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Air Mineral 1.5L</div>
+      <div class="cat">Concierge</div>
+    </div>
+    <div class="price">Rp 12.000<span> / btl</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Air Mineral 1.5L', 12000, 'btl'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Air Mineral 1.5L', 12000, 'btl'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Concierge">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231a2330%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%234b7dff%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3EMi%20Instan%20Cup%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Mi Instan Cup" loading="lazy"/>
+    <div class="chip">Instant</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Mi Instan Cup</div>
+      <div class="cat">Concierge</div>
+    </div>
+    <div class="price">Rp 10.000<span> / cup</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Mi Instan Cup', 10000, 'cup'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Mi Instan Cup', 10000, 'cup'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Concierge">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232b1c0c%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffb24a%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3ESnack%20Keripik%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Snack Keripik" loading="lazy"/>
+    <div class="chip">Snack</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Snack Keripik</div>
+      <div class="cat">Concierge</div>
+    </div>
+    <div class="price">Rp 15.000<span> / pcs</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Snack Keripik', 15000, 'pcs'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Snack Keripik', 15000, 'pcs'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Concierge">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2322160f%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23cfa67b%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3EKopi%20Sachet%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Kopi Sachet" loading="lazy"/>
+    <div class="chip">Coffee</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Kopi Sachet</div>
+      <div class="cat">Concierge</div>
+    </div>
+    <div class="price">Rp 8.000<span> / set</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Kopi Sachet', 8000, 'set'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Kopi Sachet', 8000, 'set'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+<article class="card" data-cat="Concierge">
+  <div class="img">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22700%22%20viewBox%3D%220%200%201200%20700%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b1a2b%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.55%22%20stop-color%3D%22%230f1722%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237be3ff%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%221200%22%20height%3D%22700%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%221000%22%20cy%3D%22120%22%20r%3D%22150%22%20fill%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22180%22%20cy%3D%22610%22%20r%3D%22190%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22/%3E%0A%20%20%3Crect%20x%3D%22110%22%20y%3D%22170%22%20rx%3D%2246%22%20ry%3D%2246%22%20width%3D%22980%22%20height%3D%22380%22%20fill%3D%22rgba%28255%2C255%2C255%2C.06%29%22%20stroke%3D%22rgba%28255%2C255%2C255%2C.10%29%22/%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22285%22%20fill%3D%22rgba%28233%2C238%2C246%2C.94%29%22%20font-size%3D%2264%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22900%22%3EEs%20Batu%3C/text%3E%0A%20%20%3Ctext%20x%3D%22160%22%20y%3D%22350%22%20fill%3D%22rgba%28154%2C166%2C178%2C.92%29%22%20font-size%3D%2230%22%0A%20%20%20%20%20%20%20%20font-family%3D%22system-ui%2C%20-apple-system%2C%20Segoe%20UI%2C%20Roboto%2C%20Arial%22%20font-weight%3D%22700%22%3ESLEPTOPIA%20%E2%80%A2%20Quick%20Order%3C/text%3E%0A%3C/svg%3E" alt="Es Batu" loading="lazy"/>
+    <div class="chip">Cold</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="name">Es Batu</div>
+      <div class="cat">Concierge</div>
+    </div>
+    <div class="price">Rp 10.000<span> / bag</span></div>
+    <div class="actions">
+      <button class="btn ghost" onclick="copyOrder('Es Batu', 10000, 'bag'); event.stopPropagation();">Copy order</button>
+      <a class="btn primary" href="https://wa.me/message/AJ2VGIT6CVZVE1" target="_blank" rel="noopener" onclick="hintCopy('Es Batu', 10000, 'bag'); event.stopPropagation();">WhatsApp</a>
+    </div>
+  </div>
+</article>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Copied ✅</div>
+
+  <script>
+    const q = document.getElementById("q");
+    const tabs = document.querySelectorAll(".tab");
+    const cards = Array.from(document.querySelectorAll(".card"));
+    const toastEl = document.getElementById("toast");
+    let active = "all";
+    let tmr = null;
+
+    function rupiah(n){
+      return "Rp " + (n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(tmr);
+      tmr = setTimeout(()=>toastEl.classList.remove("show"), 1400);
+    }
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Copied ✅");
+      }catch(e){
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        toast("Copied ✅");
+      }
+    }
+    function makeMsg(name, price, unit){
+      return "Halo Sleptopia, mau order:\n\n"
+        + "Item: " + name + "\n"
+        + "Qty: 1\n"
+        + "Harga: " + rupiah(price) + " / " + unit + "\n"
+        + "Catatan: (No kamar + nama tamu)\n\n"
+        + "Terima kasih 🙏";
+    }
+    window.copyOrder = (name, price, unit) => copyText(makeMsg(name, price, unit));
+    window.hintCopy = (name, price, unit) => copyText(makeMsg(name, price, unit));
+
+    function applyFilter(){
+      const term = (q.value || "").toLowerCase().trim();
+      cards.forEach(c => {
+        const cat = c.getAttribute("data-cat");
+        const text = c.innerText.toLowerCase();
+        const okTab = (active === "all") || (cat === active);
+        const okTerm = !term || text.includes(term);
+        c.style.display = (okTab && okTerm) ? "" : "none";
+      });
+    }
+    tabs.forEach(t => {
+      t.addEventListener("click", () => {
+        tabs.forEach(x=>x.classList.remove("active"));
+        t.classList.add("active");
+        active = t.getAttribute("data-tab");
+        applyFilter();
+      });
+    });
+    q.addEventListener("input", applyFilter);
+  </script>
+</body>
+</html>
